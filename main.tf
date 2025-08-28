@@ -33,18 +33,4 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = false
 }
 
-variable "cluster_name" {
-    default = "cluster-2"
-}
-variable "region" {
-    default = "us-central1-c"
-}
-variable "node_count" {
-    default = "2"
-}
 
-variable "node_machine_type" {
-  description = "The type of machine to use for nodes in the Kubernetes cluster"
-  type        = string
-  default     = "e2-standard-4"
-}
