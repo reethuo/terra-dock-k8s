@@ -37,9 +37,8 @@ module "delegate" {
   replicas = 1
   upgrader_enabled = true
   
-  # This dependency is now placed in the module block
   depends_on = [
-    google_container_cluster.primary
+    time_sleep.wait_for_gke_cluster
   ]
 }
 
