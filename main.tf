@@ -12,6 +12,11 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.11"
     }
+    # Add the utils provider here
+    utils = {
+      source = "cloudposse/utils"
+      version = "~> 1.2" # Use a compatible version
+    }
   }
 }
 
@@ -32,5 +37,3 @@ resource "google_container_cluster" "primary" {
 
   remove_default_node_pool = false
 }
-
-
