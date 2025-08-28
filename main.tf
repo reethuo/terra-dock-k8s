@@ -23,6 +23,12 @@ data "google_container_cluster" "primary_creds" {
   location = google_container_cluster.primary.location
 }
 
+provider "kubernetes" {
+  host                   = "https://${data.google_container_cluster.primary_creds.endpoint}"
+  token                  = data.google_client_config.default.access_token
+  cluster_ca_certificate = base64decode(data.google_container_cluster.primary_creds.master_auth.0.cluster_ca_certificate)
+}
+
 module "delegate" {
   source = "harness/harness-delegate/kubernetes"
   version = "0.2.3"
