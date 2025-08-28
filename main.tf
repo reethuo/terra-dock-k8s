@@ -1,24 +1,3 @@
-terraform {
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "~> 5.0"
-    }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.22"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "~> 2.11"
-    }
-    time = {
-      source  = "hashicorp/time"
-      version = "~> 0.9"
-    }
-  }
-}
-
 provider "google" {
   zone = var.region
   project = "ritu-pro"
@@ -57,6 +36,11 @@ module "delegate" {
   delegate_image = "us-docker.pkg.dev/gar-prod-setup/harness-public/harness/delegate:25.08.86503"
   replicas = 1
   upgrader_enabled = true
+  
+  depends_on = [
+    time_sleep.wait_for_gke_cluster,
+    google_container_cluster.primary
+  ]
 }
 
 resource "time_sleep" "wait_for_gke_cluster" {
@@ -68,6 +52,7 @@ provider "kubernetes" {
   host                   = "https://${google_container_cluster.primary.endpoint}"
   cluster_ca_certificate = base64decode(google_container_cluster.primary.master_auth[0].cluster_ca_certificate)
   token                  = data.google_client_config.default.access_token
+  depends_on = [google_container_cluster.primary]
 }
 
 provider "helm" {
@@ -76,4 +61,5 @@ provider "helm" {
     cluster_ca_certificate = base64decode(google_container_cluster.primary.master_auth[0].cluster_ca_certificate)
     token                  = data.google_client_config.default.access_token
   }
+  depends_on = [google_container_cluster.primary]
 }
