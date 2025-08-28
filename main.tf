@@ -17,6 +17,11 @@ terraform {
       source = "cloudposse/utils"
       version = "~> 1.2" # Use a compatible version
     }
+    # Add the time provider here
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.9" # Use a compatible version
+    }
   }
 }
 
