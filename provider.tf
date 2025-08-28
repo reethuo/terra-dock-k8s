@@ -12,6 +12,10 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.11"
     }
+    utils = {
+      source = "cloudposse/utils"
+      version = "~> 1.2" # Use a compatible version
+    }
     time = {
       source  = "hashicorp/time"
       version = "~> 0.9"
