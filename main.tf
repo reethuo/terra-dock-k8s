@@ -1,12 +1,16 @@
 terraform {
   required_providers {
-    null = {
-      source  = "hashicorp/null" 
-      version = "~> 3.2" #ensures that Terraform uses version ~> 3.2
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 4.50"
     }
-    time = {
-      source  = "hashicorp/time"
-      version = "~> 0.9" # Use a compatible version
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.19"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 2.10"
     }
   }
 }
