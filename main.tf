@@ -19,6 +19,8 @@ resource "google_container_cluster" "primary" {
   remove_default_node_pool = false
 }
 
+data "google_client_config" "default" {}
+
 data "google_container_cluster" "primary_creds" {
   name     = google_container_cluster.primary.name
   location = google_container_cluster.primary.location
@@ -42,7 +44,7 @@ module "delegate" {
 provider "helm" {
   kubernetes {
     host                   = "https://${data.google_container_cluster.primary_creds.endpoint}"
-    token                  = data.google_container_cluster.primary_creds.master_auth.0.token
+    token                  = data.google_client_config.default.access_token
     cluster_ca_certificate = base64decode(data.google_container_cluster.primary_creds.master_auth.0.cluster_ca_certificate)
   }
 }
