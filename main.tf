@@ -12,6 +12,10 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.10"
     }
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.9" # Use a compatible version
+    }
   }
 }
 provider "google" {
