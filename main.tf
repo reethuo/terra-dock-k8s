@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/null" 
       version = "~> 3.2" #ensures that Terraform uses version ~> 3.2
     }
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.9" # Use a compatible version
+    }
   }
 }
 provider "google" {
