@@ -4,11 +4,8 @@ provider "google" {
 }
 
 resource "google_container_cluster" "primary" {
-  name     = var.cluster_name
-  location = var.region
-
-  
-
+  name        = var.cluster_name
+  location    = var.region
   initial_node_count = var.node_count
 
   node_config {
@@ -39,9 +36,13 @@ module "delegate" {
   delegate_image = "us-docker.pkg.dev/gar-prod-setup/harness-public/harness/delegate:25.08.86503"
   replicas = 1
   upgrader_enabled = true
+  
+  # This dependency is now placed in the module block
+  depends_on = [
+    google_container_cluster.primary
+  ]
 }
 
-# Add this block before the Helm provider
 resource "time_sleep" "wait_for_gke_cluster" {
   create_duration = "120s"
   depends_on = [google_container_cluster.primary]
@@ -53,6 +54,4 @@ provider "helm" {
     token                  = data.google_client_config.default.access_token
     cluster_ca_certificate = base64decode(data.google_container_cluster.primary_creds.master_auth.0.cluster_ca_certificate)
   }
-  # Add a depends_on to the Helm provider as well
-  depends_on = [time_sleep.wait_for_gke_cluster]
 }
