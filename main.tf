@@ -1,5 +1,4 @@
 # 1️⃣ Create the GKE cluster
-# 1️⃣ Create the GKE cluster
 resource "google_container_cluster" "primary" {
   name                     = var.cluster_name
   location                 = var.region
