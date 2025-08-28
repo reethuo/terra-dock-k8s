@@ -41,10 +41,18 @@ module "delegate" {
   upgrader_enabled = true
 }
 
+# Add this block before the Helm provider
+resource "time_sleep" "wait_for_gke_cluster" {
+  create_duration = "120s"
+  depends_on = [google_container_cluster.primary]
+}
+
 provider "helm" {
   kubernetes {
     host                   = "https://${data.google_container_cluster.primary_creds.endpoint}"
     token                  = data.google_client_config.default.access_token
     cluster_ca_certificate = base64decode(data.google_container_cluster.primary_creds.master_auth.0.cluster_ca_certificate)
   }
+  # Add a depends_on to the Helm provider as well
+  depends_on = [time_sleep.wait_for_gke_cluster]
 }
