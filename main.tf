@@ -7,6 +7,8 @@ resource "google_container_cluster" "primary" {
 
   network    = "default"
   subnetwork = "default"
+  deletion_protection = false
+  
 }
 
 # 2️⃣ Create a node pool for the cluster
