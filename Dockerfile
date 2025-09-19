@@ -1,5 +1,6 @@
 # Use an official Python runtime as a base image
-FROM python:3.9-slim-buster
+# Use a newer Python version with bullseye (Debian 11)
+FROM python:3.9-slim-bullseye
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -17,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
+
 # Copy requirements file
 COPY terra-dock-k8s/requirements.txt .
 
