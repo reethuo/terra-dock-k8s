@@ -18,13 +18,13 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file
-COPY terra-dock-k8s/requirements.txt .
+COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project
-COPY terra-dock-k8s/. .
+COPY . .
 
 # Create directories for templates and database
 RUN mkdir -p templates
