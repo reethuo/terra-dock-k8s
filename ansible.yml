@@ -1,0 +1,38 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Install tools
+      yum:
+        name:
+          - yum-utils
+          - wget
+          - git
+          - python3
+          - python3-pip
+          - epel-release
+        state: present
+        update_cache: true
+
+    - name: Add Docker repository
+      shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      args:
+        creates: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Install Docker
+      yum:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: true
+    - name: run the container
+      shell: |
+        docker run -d -p 5000:5000  {{ image_name }}  
+        
