@@ -34,4 +34,4 @@
         enabled: true
     - name: run the container
       shell: |
-        docker run -d -p 8080:80 {{image_name}} 
+        docker run -d -p 3000:80 {{image_name}} 
