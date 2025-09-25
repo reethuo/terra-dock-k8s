@@ -8,7 +8,7 @@ RUN apk add --no-cache curl
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy our HTML application to nginx directory
-COPY /repo/index.html /usr/share/nginx/html/
+COPY repo/index.html /usr/share/nginx/html/
 
 # Copy custom nginx configuration (optional)
 #COPY nginx.conf /etc/nginx/nginx.conf
