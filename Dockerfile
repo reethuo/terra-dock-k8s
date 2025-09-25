@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy built jar
-COPY terra-dock-k8s/target/my-app-1.0.0.jar app.jar
+COPY repo/target/my-app-1.0.0.jar app.jar
 
 # Expose port
 EXPOSE 8082
